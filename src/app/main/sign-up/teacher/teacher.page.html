@@ -1,0 +1,54 @@
+<ion-header>
+    <ion-toolbar color="tertiary">
+      <ion-title>App name</ion-title>
+      <ion-buttons slot="primary">
+        <ion-button (click)="closePanel()">
+          <ion-icon name="close" slot="icon-only"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content color="dark">
+    <ion-card color="light">
+      <ion-card-header color="tertiary">
+        <ion-card-title>Teacher Account</ion-card-title>
+        <ion-card-subtitle>Additional information</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content color="light">
+        <ion-list>
+          <ion-item>
+            <ion-list>
+              <ion-list-header>Gender</ion-list-header>
+              <ion-radio-group [(ngModel)] = "userDetails.teacher.gender">
+                <ion-item>
+                  <ion-label>Male</ion-label>
+                  <ion-radio slot="start" value="male" selected></ion-radio>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Female</ion-label>
+                  <ion-radio slot="start" value="female"></ion-radio>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Other</ion-label>
+                  <ion-radio slot="start" value="other"></ion-radio>
+                </ion-item>
+              </ion-radio-group>
+            </ion-list>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked">Education</ion-label>
+            <ion-select [(ngModel)]="userDetails.teacher.education" interface="popover" placeholder="U.G">
+              <ion-select-option *ngFor="let type of Fields">{{ type }}</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating"
+              >School/College/University Name</ion-label>
+            <ion-input [(ngModel)]="userDetails.teacher.studied" type="text"></ion-input>
+          </ion-item>
+          <ion-button color="tertiary" (click) ="finish()" class="ion-margin">Sign up</ion-button>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+  </ion-content>
+  

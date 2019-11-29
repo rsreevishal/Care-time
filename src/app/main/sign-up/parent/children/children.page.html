@@ -1,0 +1,72 @@
+<ion-header>
+  <ion-toolbar color="tertiary">
+    <ion-title>App name</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button (click) = "closePanel()">
+        <ion-icon name="close" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content color="dark">
+    <ion-card color="light">
+        <ion-card-header color="tertiary">
+          <ion-card-title>{{ heading }}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <form #childForm="ngForm">
+          <ion-list>
+            <ion-item>
+              <ion-label position="floating">Name</ion-label>
+              <ion-input [(ngModel)]="details.name" type="text" #name="ngModel" name="name" minlength="3" maxlength="20" required></ion-input>
+            </ion-item>
+            <small [hidden] = "name.valid || name.untouched">Name is required with 3-20 characters</small>
+            <ion-item>
+              <ion-label position="floating">Age</ion-label>
+              <ion-input [(ngModel)]="details.age" type="number" #age="ngModel" name="age" min="1" max="30" required></ion-input>
+            </ion-item>
+            <small [hidden] = "age.valid || age.untouched">Age is required. Between 1-30</small>
+            <ion-item>
+                <ion-list>
+                  <ion-list-header>Gender</ion-list-header>
+                  <ion-radio-group [(ngModel)]="details.gender" #gender="ngModel" name="gender" required>
+                    <ion-item>
+                      <ion-label>Male</ion-label>
+                      <ion-radio slot="start" value="male" selected></ion-radio>
+                    </ion-item>
+                    <ion-item>
+                      <ion-label>Female</ion-label>
+                      <ion-radio slot="start" value="female"></ion-radio>
+                    </ion-item>
+                    <ion-item>
+                      <ion-label>Other</ion-label>
+                      <ion-radio slot="start" value="other"></ion-radio>
+                    </ion-item>
+                  </ion-radio-group>
+                </ion-list>
+              </ion-item>
+              <small [hidden] = "gender.valid || gender.untouched">Gender is required</small>
+              <ion-item>
+                <ion-label position="stacked">Education</ion-label>
+                <ion-select [(ngModel)]="details.education" interface="popover" placeholder="primary education" name="education" #edu="ngModel" required>
+                  <ion-select-option *ngFor="let type of Fields">{{ type }}</ion-select-option>
+                </ion-select>
+              </ion-item>
+              <small [hidden] = "edu.valid || edu.untouched">Education is required</small>
+              <ion-item>
+                <ion-label position="floating"
+                  >School/College/University Name</ion-label>
+                <ion-input [(ngModel)]="details.studied" type="text" name="studied" #studied="ngModel" maxlength="40" required></ion-input>
+              </ion-item>
+              <small [hidden] = "studied.valid || studied.untouched">School/College/University Name is required. Max length 40</small>
+              <ion-item>
+                <ion-label position="floating">Child interest</ion-label>
+                <ion-textarea [(ngModel)]="details.interest" name="interest" #interest="ngModel" required maxlength="50"></ion-textarea>
+              </ion-item>
+              <small [hidden] = "interest.valid || interest.untouched">Interest is required. Max length 50.</small>
+          </ion-list>
+          <ion-button color="tertiary" [disabled] = "!childForm.valid" (click)="next(childForm)" >{{ btnMessage }}</ion-button>
+        </form>
+        </ion-card-content>
+      </ion-card>      
+</ion-content>

@@ -1,0 +1,79 @@
+<ion-header>
+  <ion-toolbar color="tertiary">
+    <ion-title>App name</ion-title>
+    <ion-buttons slot="primary">
+        <ion-button (click)="closePanel()">
+            <ion-icon name="close" slot="icon-only"></ion-icon>
+          </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="dark">
+  <ion-card color="light">
+    <ion-card-header color="tertiary">
+      <ion-card-title>SIGN UP</ion-card-title>
+    </ion-card-header>
+    <ion-card-content color="light">
+      <form #userForm = "ngForm">
+      <ion-list>
+        <ion-item>
+          <ion-label position="floating">Name</ion-label>
+          <ion-input [(ngModel)]="userService.details.name" #name="ngModel" name="name" autocomplete="on" type="text" required minlength="3" maxlength="20"></ion-input>
+        </ion-item>
+        <small [hidden] = "name.valid || name.untouched" >Name is required and it should be 3-20 characters.</small>
+        <ion-item>
+          <ion-label position="floating">Email</ion-label>
+          <ion-input [(ngModel)]="userService.details.email" #email="ngModel" name="email" autocomplete="on" type="email" required pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" ></ion-input>
+        </ion-item>
+        <small [hidden] = "email.valid || email.untouched">Email is required and should be proper</small>
+        <ion-item>
+          <ion-label position="floating">Mobile</ion-label>
+          <ion-input [(ngModel)]="userService.details.mobile" #mobile = "ngModel" pattern = "(7|8|9)\d{9}" name="mobile" autocomplete="on"  type="number" required></ion-input>
+        </ion-item>
+        <small [hidden] = "mobile.valid || mobile.untouched">Mobile number is required and should be 10 digits</small>
+        <ion-item>
+            <ion-label position="floating">Age</ion-label>
+            <ion-input [(ngModel)]="userService.details.age" #age="ngModel" pattern="[1-9]\d{0,1}" name="age" autocomplete="on" type="number" required></ion-input>
+        </ion-item>
+        <small [hidden] = "age.valid || age.untouched">Age is required</small>
+        <ion-item>
+            <ion-label position="floating">City</ion-label>
+            <ion-input #city="ngModel" [(ngModel)]="userService.details.city" minlength="2" maxlength="30" name="city" autocomplete="on" type="text" required></ion-input>
+        </ion-item>
+        <small [hidden] = "city.valid || city.untouched">City is required</small>
+        <ion-item>
+          <ion-label position="fixed">Account type</ion-label>
+          <ion-list>
+            <ion-radio-group #account="ngModel" [(ngModel)]="userService.details.account" name="account" required>
+              <ion-item >
+                <ion-label>Parent</ion-label>
+                <ion-radio color="primary" slot="start" value="parent"></ion-radio>
+              </ion-item>
+              <ion-item>
+                <ion-label>Student</ion-label>
+                <ion-radio color="secondary" slot="start" value="student"></ion-radio>
+              </ion-item>
+              <ion-item>
+                <ion-label>Teacher</ion-label>
+                <ion-radio color="tertiary" slot="start" value="teacher"></ion-radio>
+              </ion-item>
+            </ion-radio-group>
+          </ion-list>
+        </ion-item>
+        <small [hidden] = "account.valid || account.untouched">Account type is required</small>
+        <ion-item>
+          <ion-label position="floating">Password</ion-label>
+          <ion-input #pass="ngModel" [(ngModel)]="userService.details.password" minlength="8" maxlength="20" name="password" type="password" required></ion-input>
+        </ion-item>
+        <small [hidden] = "pass.valid || pass.untouched">Password is required with min 8 characters</small>
+        <ion-item>
+          <ion-label position="floating">Confirm Password</ion-label>
+          <ion-input [(ngModel)]="confirmPassword" minlength="8" maxlength="20" name="cpassword" type="password" required></ion-input>
+        </ion-item>
+        <ion-button [disabled] = "!userForm.valid" (click) = "nextPanel()" color="tertiary" type="submit" class="ion-margin">Next</ion-button>
+      </ion-list>
+    </form>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

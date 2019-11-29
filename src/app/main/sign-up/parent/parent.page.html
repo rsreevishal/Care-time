@@ -1,0 +1,116 @@
+<ion-header>
+  <ion-toolbar color="tertiary">
+    <ion-title>App name</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button (click)="closePanel()">
+        <ion-icon name="close" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<!-- <ion-content color="dark">
+    <ion-card color="light">
+      <ion-card-header color="tertiary"> 
+        <ion-card-title>Parent Account</ion-card-title>
+        <ion-card-subtitle>Additional information</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list>
+          <ion-item >
+            <ion-list>
+              <ion-list-header>Your role</ion-list-header>
+              <ion-radio-group [(ngModel)] = "userDetails.parent.role" required =true>
+                <ion-item >
+                  <ion-label>Father</ion-label>
+                  <ion-radio slot="start" value="father" checked></ion-radio>
+                </ion-item>
+                <ion-item >
+                  <ion-label>Mother</ion-label>
+                  <ion-radio slot="start" value="mother"></ion-radio>
+                </ion-item>
+                <ion-item >
+                  <ion-label>Other</ion-label>
+                  <ion-radio slot="start" value="other"></ion-radio>
+                </ion-item>
+              </ion-radio-group>
+            </ion-list>
+          </ion-item>
+          <ion-item >
+            <ion-label position="stacked">Number of children</ion-label>
+            <ion-input [(ngModel)] = "userDetails.parent.children" type="number" placeholder=1 required = true></ion-input>
+          </ion-item>
+          <ion-item >
+            <ion-list>
+              <ion-list-header>Working time</ion-list-header>
+              <ion-item >
+                <ion-label>Start time</ion-label>
+                <ion-datetime [(ngModel)] = "userDetails.parent.workStart" displayFormat="HH:mm" placeholder="00:00" required = true></ion-datetime>
+              </ion-item>
+              <ion-item >
+                  <ion-label>End time</ion-label>
+                  <ion-datetime [(ngModel)] = "userDetails.parent.workEnd" displayFormat="HH:mm" placeholder="00:00" required = true></ion-datetime>
+                </ion-item>
+            </ion-list>
+          </ion-item>
+          <ion-button type="submit" (click) ="childPanel()" color="tertiary" class="ion-margin">Next</ion-button>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+  </ion-content>
+   -->
+
+<ion-content color="dark">
+  <ion-card color="light">
+    <ion-card-header color="tertiary">
+      <ion-card-title>Parent Account</ion-card-title>
+      <ion-card-subtitle>Additional information</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <form #userForm = "ngForm">
+          <ion-list>
+              <ion-item >
+                <ion-list>
+                  <ion-list-header>Your role</ion-list-header>
+                  <ion-radio-group required #role="ngModel" name="role" [(ngModel)] = "userDetails.parent.role">
+                    <ion-item >
+                      <ion-label>Father</ion-label>
+                      <ion-radio slot="start" value="father" checked></ion-radio>
+                    </ion-item>
+                    <ion-item >
+                      <ion-label>Mother</ion-label>
+                      <ion-radio slot="start" value="mother"></ion-radio>
+                    </ion-item>
+                    <ion-item >
+                      <ion-label>Other</ion-label>
+                      <ion-radio slot="start" value="other"></ion-radio>
+                    </ion-item>
+                  </ion-radio-group>
+                </ion-list>
+              </ion-item>
+              <small [hidden] = 'role.valid || role.untouched'>Your role is required</small>
+              <ion-item >
+                <ion-label position="floating">Number of children</ion-label>
+                <ion-input required #nchild="ngModel" name="children" [(ngModel)] = "userDetails.parent.children" type="number" pattern="[1-5]{1}"></ion-input>
+              </ion-item>
+              <small [hidden] = 'nchild.valid || nchild.untouched'>This field is required</small>
+              <ion-item >
+                <ion-list>
+                  <ion-list-header>Working time</ion-list-header>
+                  <ion-item >
+                    <ion-label>Start time</ion-label>
+                    <ion-datetime required #stime="ngModel" name="workStart" [(ngModel)] = "userDetails.parent.workStart" displayFormat="HH:mm" placeholder="00:00" ></ion-datetime>
+                  </ion-item>
+                  <small [hidden] = 'stime.valid || stime.untouched'>Start time is required</small>
+                  <ion-item >
+                      <ion-label>End time</ion-label>
+                      <ion-datetime required #etime="ngModel" name="workEnd" [(ngModel)] = "userDetails.parent.workEnd" displayFormat="HH:mm" placeholder="00:00"></ion-datetime>
+                    </ion-item>
+                    <small [hidden] = 'etime.valid || etime.untouched'>End time is required</small>
+                </ion-list>
+              </ion-item>
+              <ion-button [disabled] = "!userForm.valid" type="submit" (click) = "childPanel()" color="tertiary" class="ion-margin">Next</ion-button>
+            </ion-list>
+      </form>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
