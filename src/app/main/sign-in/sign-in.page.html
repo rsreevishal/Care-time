@@ -1,8 +1,8 @@
 <ion-header>
   <ion-toolbar color="tertiary">
     <ion-title>App name</ion-title>
-    <ion-button color="danger" (click) = "closePanel()" slot="end">
-      <ion-icon  name="close" slot="icon-only"></ion-icon>
+    <ion-button color="danger" (click)="closePanel()" slot="end">
+      <ion-icon name="close" slot="icon-only"></ion-icon>
     </ion-button>
   </ion-toolbar>
 </ion-header>
@@ -13,18 +13,20 @@
       <ion-card-title>SIGN IN</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <ion-item color="light">
-        <ion-label position="floating">EMAIL</ion-label>
-        <ion-input type="email" required></ion-input>
-      </ion-item>
-      <ion-item color="light">
-        <ion-label position="floating">PASSWORD</ion-label>
-        <ion-input type="password" required></ion-input>
-      </ion-item>
-      <ion-buttons class="ion-margin">
-        <ion-button>Sign in</ion-button>
-        <ion-button>Forgot password?</ion-button>
-      </ion-buttons>
+      <form #signIn = "ngForm">
+        <ion-item color="light">
+          <ion-label position="floating">EMAIL</ion-label>
+          <ion-input type="email" #email = "ngModel" [(ngModel)] = "emailField" name="email" required pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" autocomplete="on"></ion-input>
+        </ion-item>
+        <small [hidden] = "email.valid || email.untouched">Email is required and should be in proper form.</small>
+        <ion-item color="light">
+          <ion-label position="floating">PASSWORD</ion-label>
+          <ion-input type="password" #pass = "ngModel" [(ngModel)] = "passField" name="password" required minlength="8"></ion-input>
+        </ion-item>
+        <small [hidden]= "pass.valid || pass.untouched">Password is required with 8 characters minimum.</small>
+        <ion-button [disabled] = "!signIn.valid" (click) = "login()" color="tertiary" type="submit" class="ion-margin">Sign in</ion-button>
+        <ion-button [disabled] = "!email.valid" color="tertiary" class="ion-margin">Forgot password?</ion-button>
+      </form>
     </ion-card-content>
   </ion-card>
 </ion-content>

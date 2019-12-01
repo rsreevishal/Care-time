@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserDetailsService } from 'src/app/services/user-details.service';
 import { Child } from 'src/app/main/Child.model';
 import { ToastController, NavController, ModalController } from '@ionic/angular';
+import { FirebaseService } from 'src/app/services/firebase-service.service';
 
 @Component({
   selector: 'app-children',
@@ -21,7 +22,8 @@ export class ChildrenPage implements OnInit {
     studied: null,
     interest: null
   };
-  constructor(public userDetails: UserDetailsService, private toast: ToastController, private modCtrl: ModalController) {
+  constructor(public userDetails: UserDetailsService, private toast: ToastController,
+              private modCtrl: ModalController, private fbAuth: FirebaseService) {
     this.index = 0;
     this.heading = 'Child ' + (this.index + 1) + ' details';
   }
@@ -33,16 +35,12 @@ export class ChildrenPage implements OnInit {
       this.btnMessage = 'Next child details';
     }
   }
-  async finish() {
-    const message = await this.toast.create({
-      header: 'Thank you',
-      message: 'Your request is successfully submitted!',
-      position: 'middle',
-      duration: 6000
+  finish() {
+    this.fbAuth.signUp(this.userDetails.details.email, this.userDetails.details.password).then( () => {
+      this.closePanel();
     });
-    await message.present();
-    this.closePanel();
   }
+
   closePanel() {
     this.modCtrl.dismiss();
   }

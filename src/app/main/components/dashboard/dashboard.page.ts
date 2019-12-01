@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,5 +12,4 @@ export class DashboardPage implements OnInit {
 
   ngOnInit() {
   }
-
 }

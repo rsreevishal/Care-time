@@ -4,15 +4,15 @@ import { Routes, RouterModule } from '@angular/router';
 import { MainPage } from './main.page';
 import { AuthGuardService } from '../services/auth-guard.service';
 
+
 const routes: Routes = [
   {
     path: '',
     component: MainPage,
-    pathMatch: 'full'
   },
   {
-    path: 'dashboard',
-    loadChildren: './components/dashboard/dashboard.module#DashboardPageModule',
+    path: 'components',
+    loadChildren: './components/components-routing.module#ComponentsRoutingModule',
     canActivate: [AuthGuardService]
   }
 ];
@@ -21,4 +21,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class MainPageRoutingModule {}
+export class MainPageRoutingModule {
+}

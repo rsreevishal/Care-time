@@ -4,6 +4,7 @@ import { SignInPage } from './sign-in/sign-in.page';
 import { SignUpPage } from './sign-up/sign-up.page';
 import { GalleryPage } from './gallery/gallery.page';
 
+
 @Component({
   selector: 'app-main',
   templateUrl: './main.page.html',
@@ -14,6 +15,7 @@ export class MainPage implements OnInit {
   constructor(public mdCtrl: ModalController) { }
 
   ngOnInit() {
+
   }
 
   async loginPanel() {

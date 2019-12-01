@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
 import { UserDetailsService } from 'src/app/services/user-details.service';
+import { FirebaseService } from 'src/app/services/firebase-service.service';
 
 @Component({
   selector: 'app-teacher',
@@ -9,21 +10,17 @@ import { UserDetailsService } from 'src/app/services/user-details.service';
 })
 export class TeacherPage implements OnInit {
   Fields = ['higher secondary', 'U.G', 'P.G', 'Phd', 'Others'];
-  constructor(private mdCtrl: ModalController, public userDetails: UserDetailsService, private toast: ToastController) { }
+  constructor(private mdCtrl: ModalController, public userDetails: UserDetailsService
+            , private toast: ToastController, private fbAuth: FirebaseService) { }
 
   ngOnInit() {
   }
   closePanel() {
     this.mdCtrl.dismiss();
   }
-  async finish() {
-    const message = await this.toast.create({
-      header: 'Thank you',
-      message: 'Your request is successfully submitted!',
-      position: 'middle',
-      duration: 6000
+  finish() {
+    this.fbAuth.signUp(this.userDetails.details.email, this.userDetails.details.password).then( () => {
+      this.closePanel();
     });
-    await message.present();
-    this.closePanel();
   }
 }
