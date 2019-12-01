@@ -12,12 +12,12 @@ export class MenuPage implements OnInit {
   pages = [
     {
       title: 'Home',
-      url: ['main', 'components', 'menu', 'dashboard'],
+      url: ['components', 'menu', 'dashboard'],
       icon: 'home'
     },
     {
       title: 'Profile',
-      url: ['main', 'components', 'menu', 'profile'],
+      url: ['components', 'menu', 'profile'],
       icon: 'person'
     }
   ];

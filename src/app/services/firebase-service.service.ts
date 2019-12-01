@@ -4,12 +4,15 @@ import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
 import { BehaviorSubject } from 'rxjs';
-import { ToastController } from '@ionic/angular';
+import { ToastController, Platform } from '@ionic/angular';
+import { Storage } from '@ionic/storage';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class FirebaseService {
+  TOKEN_KEY = 'auth-key';
   authenticationState = new BehaviorSubject(false);
   firebaseConfig = {
     apiKey: 'AIzaSyAaPCJ57asWlJAkp096QX_C7ZmjRbnegpg',
@@ -24,7 +27,10 @@ export class FirebaseService {
   app: firebase.app.App;
   auth: firebase.auth.Auth;
   db: firebase.firestore.Firestore;
-  constructor(private toast: ToastController) {
+  constructor(private toast: ToastController, private storage: Storage, private platform: Platform) {
+    this.platform.ready().then(() => {
+      this.checkToken();
+    });
     this.app = firebase.initializeApp(this.firebaseConfig);
     this.auth = firebase.auth();
     this.db = firebase.firestore();
@@ -43,10 +49,12 @@ export class FirebaseService {
         return this.db.collection('users').doc(cred.user.uid).set(data).then(() => {
           this.authenticationState.next(true);
           this.toastMessage('Thank you', 'Your successfully registered!. Now you can login.', 'success', 'middle', 6000);
+          this.storage.set(this.TOKEN_KEY, JSON.stringify(cred.user));
           this.logOut();
         });
       }
       this.toastMessage('Thank you', 'Your successfully registered!. Now you can login.', 'success', 'middle', 6000);
+      this.storage.set(this.TOKEN_KEY, JSON.stringify(cred.user));
       this.logOut();
     }).catch(err => {
       if (err) {
@@ -58,6 +66,7 @@ export class FirebaseService {
   async signIn(email: string, pass: string) {
     await this.auth.signInWithEmailAndPassword(email, pass).then( cred => {
       if (cred) {
+        this.storage.set(this.TOKEN_KEY, JSON.stringify(cred.user));
         this.authenticationState.next(true);
       }
       this.toastMessage('Success', 'Your now loginned!.', 'success', 'middle', 6000);
@@ -69,11 +78,20 @@ export class FirebaseService {
   }
 
   logOut() {
+    this.storage.remove(this.TOKEN_KEY);
     this.auth.signOut();
   }
 
   isAuthenticated() {
     return this.authenticationState.value;
+  }
+
+  async checkToken() {
+    const res = await this.storage.get(this.TOKEN_KEY);
+    if (res) {
+      return this.authenticationState.next(true);
+    }
+    return res;
   }
 
   async toastMessage(header: string, message: string, color: string, position , duration) {

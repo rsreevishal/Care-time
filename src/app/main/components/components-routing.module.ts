@@ -6,7 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
     {
         path: 'menu',
-        loadChildren: './menu/menu.module#MenuPageModule'
+        loadChildren: './menu/menu.module#MenuPageModule',
     }
 ];
 
@@ -16,6 +16,7 @@ const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes)
-  ]
+  ],
+  exports: [RouterModule]
 })
 export class ComponentsRoutingModule { }

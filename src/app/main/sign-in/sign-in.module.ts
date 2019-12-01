@@ -15,6 +15,7 @@ import { SignInPage } from './sign-in.page';
     IonicModule,
     SignInPageRoutingModule
   ],
-  declarations: [SignInPage]
+  declarations: [SignInPage],
+  entryComponents: [SignInPage]
 })
 export class SignInPageModule {}

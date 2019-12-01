@@ -15,6 +15,7 @@ import { GalleryPage } from './gallery.page';
     IonicModule,
     GalleryPageRoutingModule
   ],
-  declarations: [GalleryPage]
+  declarations: [GalleryPage],
+  entryComponents: [GalleryPage]
 })
 export class GalleryPageModule {}

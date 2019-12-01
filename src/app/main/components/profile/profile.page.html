@@ -8,5 +8,65 @@
 </ion-header>
 
 <ion-content color="dark">
-
+  <ion-card color="light">
+    <ion-card-header color="tertiary">
+      <ion-card-title>User details</ion-card-title>
+      <ion-card-subtitle>basic information</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item>
+          <ion-label class="myLabel">Name</ion-label>{{ profile.name }}
+        </ion-item>
+        <ion-item>
+            <ion-label class="myLabel">Email</ion-label>{{ profile.email }}
+        </ion-item>
+        <ion-item>
+            <ion-label class="myLabel">Mobile</ion-label>{{ profile.mobile }}
+        </ion-item>
+        <ion-item>
+            <ion-label class="myLabel">Age</ion-label>{{ profile.age }}
+        </ion-item>
+        <ion-item>
+            <ion-label class="myLabel">City</ion-label>{{ profile.city }}
+        </ion-item>
+        <ion-item>
+            <ion-label class="myLabel">Account type</ion-label>{{ profile.account }}
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+  <ion-card  color="light">
+    <ion-card-header color="tertiary">
+      <ion-card-title>Additional details</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+          <div [ngSwitch] = "profile.account">
+              <div *ngSwitchCase = "'student'">
+                <ion-item>
+                      <ion-label class="myLabel">Gender</ion-label>{{ student.gender }}
+                </ion-item>
+                <ion-item>
+                    <ion-label class="myLabel">Education</ion-label>{{ student.education }}
+                </ion-item>
+                <ion-item>
+                    <ion-label class="myLabel">Studied</ion-label>{{ student.studied }}
+                </ion-item>
+              </div>
+              <div *ngSwitchCase = "'teacher'">
+                <ion-item>
+                      <ion-label class="myLabel">Gender</ion-label>{{ student.gender }}
+                </ion-item>
+                <ion-item>
+                    <ion-label class="myLabel">Education</ion-label>{{ student.education }}
+                </ion-item>
+                <ion-item>
+                    <ion-label class="myLabel">Studied</ion-label>{{ student.studied }}
+                </ion-item>
+              </div>
+          </div>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

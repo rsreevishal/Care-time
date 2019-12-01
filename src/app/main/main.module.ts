@@ -7,11 +7,10 @@ import { IonicModule } from '@ionic/angular';
 import { MainPageRoutingModule } from './main-routing.module';
 
 import { MainPage } from './main.page';
-import { SignInPage } from './sign-in/sign-in.page';
 import { SignInPageModule } from './sign-in/sign-in.module';
-import { SignInPageRoutingModule } from './sign-in/sign-in-routing.module';
 import { SignUpPageModule } from './sign-up/sign-up.module';
 import { GalleryPageModule } from './gallery/gallery.module';
+
 
 @NgModule({
   imports: [
@@ -21,7 +20,7 @@ import { GalleryPageModule } from './gallery/gallery.module';
     MainPageRoutingModule,
     SignInPageModule,
     SignUpPageModule,
-    GalleryPageModule
+    GalleryPageModule,
   ],
   declarations: [MainPage]
 })

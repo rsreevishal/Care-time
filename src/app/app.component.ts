@@ -28,7 +28,7 @@ export class AppComponent {
       this.splashScreen.hide();
       this.fbAuth.authenticationState.subscribe( val => {
         if (val) {
-          this.router.navigate(['main', 'components', 'menu', 'dashboard']);
+          this.router.navigate(['components', 'menu', 'dashboard']);
         } else {
           this.router.navigate(['main']);
         }

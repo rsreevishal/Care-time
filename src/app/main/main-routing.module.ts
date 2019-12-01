@@ -8,12 +8,7 @@ import { AuthGuardService } from '../services/auth-guard.service';
 const routes: Routes = [
   {
     path: '',
-    component: MainPage,
-  },
-  {
-    path: 'components',
-    loadChildren: './components/components-routing.module#ComponentsRoutingModule',
-    canActivate: [AuthGuardService]
+    component: MainPage
   }
 ];
 
