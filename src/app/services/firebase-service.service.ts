@@ -42,35 +42,16 @@ export class FirebaseService {
       if (data) {
         return this.db.collection('users').doc(cred.user.uid).set(data).then(() => {
           this.authenticationState.next(true);
-          this.toast.create({
-            header: 'Thank you',
-            message: 'Your successfully registered!. Now you can login.',
-            color: 'success',
-            duration: 6000,
-            position: 'middle'
-          }).then((t) => { t.present(); });
+          this.toastMessage('Thank you', 'Your successfully registered!. Now you can login.', 'success', 'middle', 6000);
           this.logOut();
         });
       }
-      this.toast.create({
-        header: 'Thank you',
-        message: 'Your successfully registered!. Now you can login.',
-        color: 'success',
-        duration: 6000,
-        position: 'middle'
-      }).then((t) => { t.present(); });
+      this.toastMessage('Thank you', 'Your successfully registered!. Now you can login.', 'success', 'middle', 6000);
       this.logOut();
     }).catch(err => {
       if (err) {
-        this.toast.create({
-          header: 'Error occured',
-          message: 'Your email is already registered or server down. Sorry!',
-          color: 'danger',
-          duration: 6000,
-          position: 'middle'
-        }).then((t) => { t.present(); });
+        this.toastMessage('Error occured', 'Your already registered or Server down!.', 'danger', 'middle', 6000);
       }
-
     });
   }
 
@@ -79,21 +60,10 @@ export class FirebaseService {
       if (cred) {
         this.authenticationState.next(true);
       }
-      this.toast.create({
-        header: 'Success',
-        message: 'Your now logged in.',
-        color: 'success',
-        duration: 5000,
-        position: 'middle'
-      }).then( t => { t.present(); });
+      this.toastMessage('Success', 'Your now loginned!.', 'success', 'middle', 6000);
     }).catch(err => {
       if (err) {
-        this.toast.create({
-          header: 'Failed',
-          message: 'Your account is not registered or server down!.',
-          color: 'danger',
-          duration: 5000
-        }).then( t => { t.present(); });
+        this.toastMessage('Failed', 'Your not registered or Server down!.', 'danger', 'middle', 6000);
       }
     });
   }
@@ -104,5 +74,17 @@ export class FirebaseService {
 
   isAuthenticated() {
     return this.authenticationState.value;
+  }
+
+  async toastMessage(header: string, message: string, color: string, position , duration) {
+    this.toast.create({
+      header,
+      message,
+      color,
+      position,
+      duration
+    }).then( t => {
+      t.present();
+    });
   }
 }
