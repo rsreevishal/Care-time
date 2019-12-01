@@ -42,16 +42,24 @@ export class FirebaseService {
       if (data) {
         return this.db.collection('users').doc(cred.user.uid).set(data).then(() => {
           this.authenticationState.next(true);
+          this.toast.create({
+            header: 'Thank you',
+            message: 'Your successfully registered!. Now you can login.',
+            color: 'success',
+            duration: 6000,
+            position: 'middle'
+          }).then((t) => { t.present(); });
+          this.logOut();
         });
       }
       this.toast.create({
         header: 'Thank you',
-        message: 'Your successfully registered!',
+        message: 'Your successfully registered!. Now you can login.',
         color: 'success',
         duration: 6000,
         position: 'middle'
       }).then((t) => { t.present(); });
-
+      this.logOut();
     }).catch(err => {
       if (err) {
         this.toast.create({
@@ -75,7 +83,8 @@ export class FirebaseService {
         header: 'Success',
         message: 'Your now logged in.',
         color: 'success',
-        duration: 5000
+        duration: 5000,
+        position: 'middle'
       }).then( t => { t.present(); });
     }).catch(err => {
       if (err) {
