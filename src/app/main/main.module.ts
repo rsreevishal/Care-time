@@ -9,7 +9,7 @@ import { MainPageRoutingModule } from './main-routing.module';
 import { MainPage } from './main.page';
 import { SignInPageModule } from './sign-in/sign-in.module';
 import { SignUpPageModule } from './sign-up/sign-up.module';
-import { GalleryPageModule } from './gallery/gallery.module';
+
 
 
 @NgModule({
@@ -19,8 +19,7 @@ import { GalleryPageModule } from './gallery/gallery.module';
     IonicModule,
     MainPageRoutingModule,
     SignInPageModule,
-    SignUpPageModule,
-    GalleryPageModule,
+    SignUpPageModule
   ],
   declarations: [MainPage]
 })

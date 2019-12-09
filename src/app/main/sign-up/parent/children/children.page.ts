@@ -36,9 +36,13 @@ export class ChildrenPage implements OnInit {
     }
   }
   finish() {
-    this.fbAuth.signUp(this.userDetails.details.email, this.userDetails.details.password).then( () => {
+    this.fbAuth.signUp(this.userDetails.details.email, this.userDetails.details.password, this.toJson(this.userDetails.parent)).then( () => {
       this.closePanel();
     });
+  }
+
+  toJson(obj: any) {
+    return JSON.parse(JSON.stringify(obj));
   }
 
   closePanel() {

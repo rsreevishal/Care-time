@@ -31,11 +31,4 @@ export class MainPage implements OnInit {
     });
     await model.present();
   }
-
-  async gallery() {
-    const model = await this.mdCtrl.create({
-      component: GalleryPage
-    });
-    await model.present();
-  }
 }

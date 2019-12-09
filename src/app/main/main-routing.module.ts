@@ -9,6 +9,10 @@ const routes: Routes = [
   {
     path: '',
     component: MainPage
+  },
+  {
+    path: 'gallery',
+    loadChildren: 'src/app/main/gallery/gallery.module#GalleryPageModule'
   }
 ];
 

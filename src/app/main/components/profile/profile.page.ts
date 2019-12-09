@@ -5,6 +5,7 @@ import { Person } from '../../Person.model';
 import { Student } from '../../Student.model';
 import { Teacher } from '../../Teacher.model';
 import { Parent } from '../../Parent.model';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-profile',
@@ -42,40 +43,57 @@ export class ProfilePage implements OnInit {
     workEnd: null,
     childrenDetails: null
   };
-  constructor(private storage: Storage, private fbService: FirebaseService) {
+  constructor(private storage: Storage, private fbService: FirebaseService, private toast: ToastController) {
   }
   ngOnInit() {
-    this.storage.get(this.fbService.TOKEN_KEY).then( val => {
-      if (val) {
-        this.userData = JSON.parse(val);
-        this.fbService.db.collection('users').doc(this.userData.uid).get().then( doc => {
-          if (doc.exists) {
-            this.profile.name = doc.data().person.name;
-            this.profile.email = doc.data().person.email;
-            this.profile.mobile = doc.data().person.mobile;
-            this.profile.city = doc.data().person.city;
-            this.profile.age = doc.data().person.age;
-            this.profile.account = doc.data().person.account;
-            switch (doc.data().person.account) {
-              case 'teacher': {
-                this.teacher.gender = doc.data().gender;
-                this.teacher.education = doc.data().education;
-                this.teacher.studied = doc.data().studied;
-                this.teacher.person = doc.data().person;
-                break;
-              }
-              case 'student': {
-                this.student.gender = doc.data().gender;
-                this.student.education = doc.data().education;
-                this.student.studied = doc.data().studied;
-                this.student.person = doc.data().person;
-                break;
-              }
-            }
-          }
+    this.storage.get(this.fbService.USER_ID).then(val => {
+      if(val) {
+        this.loadData(val);
+      } else {
+        this.toast.create({
+          header:'Sorry!',
+          message:'Something went wrong please login again',
+          color:'danger',
+          position:'middle',
+          duration:4000
+        }).then(t=>{
+          t.present()
         });
       }
     });
   }
 
+  loadData(val) {
+    let doc = JSON.parse(val);
+    this.profile.name = doc.person.name;
+    this.profile.email = doc.person.email;
+    this.profile.mobile = doc.person.mobile;
+    this.profile.city = doc.person.city;
+    this.profile.age = doc.person.age;
+    this.profile.account = doc.person.account;
+    switch (doc.person.account) {
+      case 'teacher': {
+        this.teacher.gender = doc.gender;
+        this.teacher.education = doc.education;
+        this.teacher.studied = doc.studied;
+        this.teacher.person = doc.person;
+        break;
+      }
+      case 'student': {
+        this.student.gender = doc.gender;
+        this.student.education = doc.education;
+        this.student.studied = doc.studied;
+        this.student.person = doc.person;
+        break;
+      }
+      case 'parent': {
+        this.parent.role = doc.role;
+        this.parent.children = doc.children;
+        this.parent.workStart = doc.workStart;
+        this.parent.workEnd = doc.workEnd;
+        this.parent.person = doc.person;
+        this.parent.childrenDetails = doc.childrenDetails;
+      }
+    }
+  }
 }

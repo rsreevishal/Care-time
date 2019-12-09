@@ -13,6 +13,7 @@ import { Storage } from '@ionic/storage';
 })
 export class FirebaseService {
   TOKEN_KEY = 'auth-key';
+  USER_ID = '';
   authenticationState = new BehaviorSubject(false);
   firebaseConfig = {
     apiKey: 'AIzaSyAaPCJ57asWlJAkp096QX_C7ZmjRbnegpg',
@@ -45,11 +46,13 @@ export class FirebaseService {
 
   async signUp(email: string, pass: string, data: JSON = null) {
     await this.auth.createUserWithEmailAndPassword(email, pass).then(cred => {
+      this.USER_ID = cred.user.uid;
       if (data) {
         return this.db.collection('users').doc(cred.user.uid).set(data).then(() => {
           this.authenticationState.next(true);
           this.toastMessage('Thank you', 'Your successfully registered!. Now you can login.', 'success', 'middle', 6000);
           this.storage.set(this.TOKEN_KEY, JSON.stringify(cred.user));
+          this.storage.set(cred.user.uid,JSON.stringify(data));
           this.logOut();
         });
       }
@@ -58,7 +61,7 @@ export class FirebaseService {
       this.logOut();
     }).catch(err => {
       if (err) {
-        this.toastMessage('Error occured', 'Your already registered or Server down!.', 'danger', 'middle', 6000);
+        this.toastMessage('Error occured', 'Your already registered!.', 'danger', 'middle', 6000);
       }
     });
   }
@@ -66,13 +69,20 @@ export class FirebaseService {
   async signIn(email: string, pass: string) {
     await this.auth.signInWithEmailAndPassword(email, pass).then( cred => {
       if (cred) {
-        this.storage.set(this.TOKEN_KEY, JSON.stringify(cred.user));
+        this.USER_ID = cred.user.uid;
+        this.storage.set(this.TOKEN_KEY,JSON.stringify(cred.user));
         this.authenticationState.next(true);
+        this.db.collection('users').doc(cred.user.uid).get().then(doc => {
+          if (doc.exists) {
+            this.storage.set(this.USER_ID, JSON.stringify(doc.data()));
+          }
+        });
       }
       this.toastMessage('Success', 'Your now loginned!.', 'success', 'middle', 6000);
     }).catch(err => {
       if (err) {
-        this.toastMessage('Failed', 'Your not registered or Server down!.', 'danger', 'middle', 6000);
+        console.log(err);
+        this.toastMessage('Failed', 'Your not registered or wrong password!.', 'danger', 'middle', 6000);
       }
     });
   }

@@ -2,7 +2,7 @@
   <ion-toolbar color="tertiary">
     <ion-title>Profile</ion-title>
     <ion-buttons slot="start">
-        <ion-menu-button ></ion-menu-button>
+      <ion-menu-button></ion-menu-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -19,54 +19,102 @@
           <ion-label class="myLabel">Name</ion-label>{{ profile.name }}
         </ion-item>
         <ion-item>
-            <ion-label class="myLabel">Email</ion-label>{{ profile.email }}
+          <ion-label class="myLabel">Email</ion-label>{{ profile.email }}
         </ion-item>
         <ion-item>
-            <ion-label class="myLabel">Mobile</ion-label>{{ profile.mobile }}
+          <ion-label class="myLabel">Mobile</ion-label>{{ profile.mobile }}
         </ion-item>
         <ion-item>
-            <ion-label class="myLabel">Age</ion-label>{{ profile.age }}
+          <ion-label class="myLabel">Age</ion-label>{{ profile.age }}
         </ion-item>
         <ion-item>
-            <ion-label class="myLabel">City</ion-label>{{ profile.city }}
+          <ion-label class="myLabel">City</ion-label>{{ profile.city }}
         </ion-item>
         <ion-item>
-            <ion-label class="myLabel">Account type</ion-label>{{ profile.account }}
+          <ion-label class="myLabel">Account type</ion-label>{{ profile.account }}
         </ion-item>
       </ion-list>
     </ion-card-content>
   </ion-card>
-  <ion-card  color="light">
+  <ion-card color="light">
     <ion-card-header color="tertiary">
       <ion-card-title>Additional details</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <ion-list>
-          <div [ngSwitch] = "profile.account">
-              <div *ngSwitchCase = "'student'">
-                <ion-item>
-                      <ion-label class="myLabel">Gender</ion-label>{{ student.gender }}
-                </ion-item>
-                <ion-item>
-                    <ion-label class="myLabel">Education</ion-label>{{ student.education }}
-                </ion-item>
-                <ion-item>
-                    <ion-label class="myLabel">Studied</ion-label>{{ student.studied }}
-                </ion-item>
-              </div>
-              <div *ngSwitchCase = "'teacher'">
-                <ion-item>
-                      <ion-label class="myLabel">Gender</ion-label>{{ student.gender }}
-                </ion-item>
-                <ion-item>
-                    <ion-label class="myLabel">Education</ion-label>{{ student.education }}
-                </ion-item>
-                <ion-item>
-                    <ion-label class="myLabel">Studied</ion-label>{{ student.studied }}
-                </ion-item>
-              </div>
+        <div [ngSwitch]="profile.account">
+          <div *ngSwitchCase="'student'">
+            <ion-item>
+              <ion-label class="myLabel">Gender</ion-label>{{ student.gender }}
+            </ion-item>
+            <ion-item>
+              <ion-label class="myLabel">Education</ion-label>{{ student.education }}
+            </ion-item>
+            <ion-item>
+              <ion-label class="myLabel">Studied</ion-label>{{ student.studied }}
+            </ion-item>
           </div>
+          <div *ngSwitchCase="'teacher'">
+            <ion-item>
+              <ion-label class="myLabel">Gender</ion-label>{{ student.gender }}
+            </ion-item>
+            <ion-item>
+              <ion-label class="myLabel">Education</ion-label>{{ student.education }}
+            </ion-item>
+            <ion-item>
+              <ion-label class="myLabel">Studied</ion-label>{{ student.studied }}
+            </ion-item>
+          </div>
+          <div *ngSwitchCase="'parent'">
+            <ion-item>
+              <ion-label class="myLabel">Role</ion-label>{{ parent.role }}
+            </ion-item>
+            <ion-item>
+              <ion-label class="myLabel">No.of Children</ion-label>{{ parent.children }}
+            </ion-item>
+            <ion-item>
+              <ion-label class="myLabel">Work starts at</ion-label>{{ parent.workStart }}
+            </ion-item>
+            <ion-item>
+              <ion-label class="myLabel">Work ends at</ion-label>{{ parent.workEnd }}
+            </ion-item>
+          </div>
+        </div>
       </ion-list>
     </ion-card-content>
   </ion-card>
+  <div *ngIf="profile.account === 'parent'">
+    <div *ngFor="let child of parent.childrenDetails">
+      <div *ngIf="child;then childDetail"></div>
+        <ng-template #childDetail>
+            <ion-card color="light">
+              <ion-card-header color="tertiary">
+                <ion-card-title>{{ child.name }}</ion-card-title>
+              </ion-card-header>
+              <ion-card-content color="light">
+                <ion-list>
+                  <ion-item>
+                    <ion-label class="myLabel">Name</ion-label> {{ child.name }}
+                  </ion-item>
+                  <ion-item>
+                    <ion-label class="myLabel">Age</ion-label> {{ child.age }}
+                  </ion-item>
+                  <ion-item>
+                    <ion-label class="myLabel">Gender</ion-label> {{ child.gender}}
+                  </ion-item>
+                  <ion-item>
+                    <ion-label class="myLabel">Education</ion-label> {{ child.education }}
+                  </ion-item>
+                  <ion-item>
+                    <ion-label class="myLabel">Studied</ion-label> {{ child.studied }}
+                  </ion-item>
+                  <ion-item>
+                    <ion-label class="myLabel">Interest</ion-label> {{ child.interest }}
+                  </ion-item>
+                </ion-list>
+              </ion-card-content>
+            </ion-card>
+          </ng-template>
+    </div>
+  </div>
 </ion-content>

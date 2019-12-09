@@ -18,9 +18,14 @@ export class TeacherPage implements OnInit {
   closePanel() {
     this.mdCtrl.dismiss();
   }
+  toJson(obj: any) {
+    return JSON.parse(JSON.stringify(obj));
+  }
+
   finish() {
-    this.fbAuth.signUp(this.userDetails.details.email, this.userDetails.details.password).then( () => {
+    this.fbAuth.signUp(this.userDetails.details.email, this.userDetails.details.password, this.toJson(this.userDetails.teacher)).then( () => {
       this.closePanel();
     });
   }
+
 }

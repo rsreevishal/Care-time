@@ -1,12 +1,35 @@
 <ion-header>
-  <ion-toolbar color="dark">
-    <ion-title>gallery</ion-title>
-      <ion-button color="light" slot="end" (click) = "closePanel()">
-        <ion-icon name="exit" slot="start"></ion-icon>Back
-      </ion-button>
+  <ion-toolbar color="tertiary">
+    <ion-title>Gallery</ion-title>
+    <ion-buttons slot="primary">
+      <ion-back-button defaultHref="/main"></ion-back-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
 
+
+<ion-content color="dark">
+  <div *ngFor="let post of data">
+    <div *ngIf="post.type === pageType">
+      <app-post [thumbnailUrl]="post.thumbnailUrl" [title]="post.title" [subtitle]="post.subtitle" [message]="post.message" [link]="post.link" [type]="post.type"></app-post>
+    </div>
+  </div>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar color="tertiary">
+    <ion-buttons slot="start">
+      <ion-button class="ion-margin" (click)="pageType = 'post'" color="light">
+        <ion-icon name="albums" slot="start"></ion-icon>Post
+        <ion-badge color="success">{{ postCount }}</ion-badge>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button class="ion-margin" (click)="pageType = 'challenge'" color="light">
+        <ion-icon name="logo-game-controller-b" slot="start"></ion-icon>Challenge
+        <ion-badge color="success">{{ challengeCount }}</ion-badge>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>
